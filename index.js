@@ -16,3 +16,10 @@ let result = cipher.update(password, 'utf8', 'base64');
 result += cipher.final('base64');
 // final 필수 > 없으면 복호화 불가능
 console.log('암호화: ',result);
+
+// 복호화
+const deciper = crypto.createDecipheriv(algorithm, key, iv);
+// 복호화 객체 생성
+let result2 = deciper.update(result, 'base64', 'utf8');
+result2 += deciper.final('utf8');
+console.log('복호화: ',result2);
