@@ -1,13 +1,18 @@
-
 //index.js
-const express = require('express') //③번 단계에서 다운받았던 express 모듈을 가져온다.
-const app = express() //가져온 express 모듈의 function을 이용해서 새로운 express 앱을 만든다. 🔥
-const port = 5000 //포트는 4000번 해도되고, 5000번 해도 된다. -> 이번엔 5000번 포트를 백 서버로 두겠다.
+const crypto = require('crypto');
 
-app.get('/', (req, res) => { //express 앱(app)을 넣고, root directory에 오면, 
-  res.send('Hello World!') //"Hello World!" 를 출력되게 해준다.
-})
+// 암호화
+const algorithm = 'aes-256-cbc';
+let password = 'Hello World!'; // 암호화 할 문구
+const key = crypto.scryptSync(password,'salt', 32); 
+// scryptSync - password, salt, byte(키 길이 제한) 순으로 대입
+const iv = crypto.randomBytes(16); 
+// 초기화 벡터 iv - 더 강력한 암호화를 위해 사용하며, 예측 불가능한 값 > 랜덤값 주는게 좋음
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-}) //포트 5000번에서 이 앱을 실행한다.
+const cipher = crypto.createCipheriv(algorithm, key, iv); 
+// 암호화 객체 생성
+let result = cipher.update(password, 'utf8', 'base64');
+// 암호화할 문장을 넣음, utf8 - 입력값 인코딩, base64 - 출력값 인코딩
+result += cipher.final('base64');
+// final 필수 > 없으면 복호화 불가능
+console.log('암호화: ',result);
