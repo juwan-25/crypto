@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRYPTO</title>
+</head>
+<body>
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="./index.html">ENCRYPTION</a></li>
+        <li role="presentation" class="active"><a href="./decry.html">DECRYPTION</a></li> 
+      </ul>
+    <div id="top_div">
+        <p id="top_txt">DECRYPTION</p>
+        <img id="top_img" src="/img/대지 1.png">
+    </div>
+    <div id="content">
+    <div id="form">
+    <form class="form-horizontal">
+        <div class="form-group">
+          <label for="plaintext" class="col-sm-2 control-label">암호키</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="key" placeholder="input your key">
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="plaintext" class="col-sm-2 control-label">암호문</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="cipher_alphabet" placeholder="input your cipher">
+            </div>
+          </div>
+        <br><br>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default" id="decryption">복호화</button>
+          </div>
+        </div>
+        <br><br>
+
+          <div class="form-group">
+            <label for="plaintext" class="col-sm-2 control-label">복호문</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="plaintext" placeholder="password">
+            </div>
+          </div>
+      </form>
+    </div>
+    </div>
+    </body>
+</html>

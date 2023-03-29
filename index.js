@@ -1,16 +1,12 @@
 //index.js
-const crypto = require('crypto');
-const encryption = require('./encryption.js');
-const decryption = require('./decryption.js');
+const express = require('express') //③번 단계에서 다운받았던 express 모듈을 가져온다.
+const app = express() //가져온 express 모듈의 function을 이용해서 새로운 express 앱을 만든다. 🔥
+const port = 5000 //포트는 4000번 해도되고, 5000번 해도 된다. -> 이번엔 5000번 포트를 백 서버로 두겠다.
 
-let plain_text = 'Hello World!'; 
-const algorithm = 'aes-256-cbc';
-const key = crypto.scryptSync(plain_text,'salt', 32); 
-const iv = crypto.randomBytes(16); 
+app.get('/', (req, res) => { //express 앱(app)을 넣고, root directory에 오면, 
+  res.send('Hello World!') //"Hello World!" 를 출력되게 해준다.
+})
 
-let cipher_alphabet = encryption.e(plain_text, crypto, algorithm, key, iv);
-console.log('암호화: ',cipher_alphabet);
-
-// 복호화
-let plain_text2 = decryption.d(cipher_alphabet, crypto, algorithm, key, iv);
-console.log('복호화: ',plain_text2);
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
