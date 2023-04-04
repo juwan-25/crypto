@@ -2,36 +2,52 @@ const express = require('express');
 const crypto = require('crypto');
 const app = express();
 const port = 5000;
-app.use(express.static('public'));
+const path = require("path");
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+app.use(express.static('views'));
 app.use(express.urlencoded({extended: false})); //요청 데이터 분석
 
-app.set('view engine','ejs');
-app.set('views','./views');
-
-const encryption = require('./public/js/encryption.js');
-const decryption = require('.//public/js/decryption.js');
+const encryption = require('./views/js/encryption.js');
+const decryption = require('.//views/js/decryption.js');
 
 
 const algorithm = 'aes-256-cbc';  
+const key = crypto.scryptSync('aspecialpassword','salt', 32);  
 const iv = crypto.randomBytes(16);
-let plaintext, cipher, key;
+let plaintext, cipher;
 
 
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
+    res.render('index', {});
 });
 
 app.post('/', (req, res) => {
-    plaintext = req.body.plaintext;
+    plaintext = req.body.plaintext;   
+    cipher = encryption.e(plaintext,crypto, algorithm, key, iv); 
 
-    res.send(plaintext);
-
+    res.render('index', {
+        plaintext : plaintext,
+        cipher : cipher
+    });
 });
 
 app.get('/decry', (req, res) => {
-    res.sendFile(__dirname + "/public/decry.html");
+    res.render('decry', {});
 
+});
+
+app.post('/decry', (req, res) => {
+    cipher = req.body.cipher;
+    console.log(cipher)   
+    plaintext = decryption.d(cipher,crypto, algorithm, key, iv); 
+
+    res.render('decry', {
+        cipher : cipher,
+        plaintext : plaintext
+    });
 });
 
 app.listen(port, () => {
